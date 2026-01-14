@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useSignupForm } from './useAuth';
 
 interface SignupProps {
   onSwitchToLogin: () => void;
 }
 
 const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Replace with actual API call
-    console.log('Sign Up', { email, password, name });
-    localStorage.setItem('token', 'dummy-token');
-    navigate('/dashboard');
-  };
+  const formik = useSignupForm();
 
   return (
     <>
@@ -26,7 +15,7 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
         Create Account
       </h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
         {/* Name Field */}
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium text-secondary ml-1">Name</label>
@@ -43,12 +32,17 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
             </svg>
             <input
               type="text"
+              name="name"
               placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="w-full py-2 pl-9 pr-3 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
             />
           </div>
+          {formik.touched.name && formik.errors.name && (
+            <span className="text-xs text-red-500 ml-1">{formik.errors.name}</span>
+          )}
         </div>
 
         {/* Email Field */}
@@ -67,12 +61,17 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
             </svg>
             <input
               type="email"
+              name="email"
               placeholder="email@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="w-full py-2 pl-9 pr-3 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
             />
           </div>
+          {formik.touched.email && formik.errors.email && (
+            <span className="text-xs text-red-500 ml-1">{formik.errors.email}</span>
+          )}
         </div>
 
         {/* Password Field */}
@@ -91,9 +90,11 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
             </svg>
             <input
               type={showPassword ? 'text' : 'password'}
+              name="password"
               placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="w-full py-2 pl-9 pr-10 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
             />
             <button
@@ -114,14 +115,70 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               )}
             </button>
           </div>
+          {formik.touched.password && formik.errors.password && (
+            <span className="text-xs text-red-500 ml-1">{formik.errors.password}</span>
+          )}
+        </div>
+
+        {/* Account Type Field */}
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-medium text-secondary ml-1">Sign up as</label>
+          <div className="flex gap-3">
+            <label
+              className={`flex-1 flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+                formik.values.type === 'USER'
+                  ? 'border-accent bg-accent/5'
+                  : 'border-border hover:border-accent/50'
+              }`}
+            >
+              <input
+                type="radio"
+                name="type"
+                value="USER"
+                checked={formik.values.type === 'USER'}
+                onChange={formik.handleChange}
+                className="accent-accent"
+              />
+              <div>
+                <span className="text-sm font-medium text-text">User</span>
+                <p className="text-xs text-text-light">Find jobs & interviews</p>
+              </div>
+            </label>
+            <label
+              className={`flex-1 flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+                formik.values.type === 'COMPANY'
+                  ? 'border-accent bg-accent/5'
+                  : 'border-border hover:border-accent/50'
+              }`}
+            >
+              <input
+                type="radio"
+                name="type"
+                value="COMPANY"
+                checked={formik.values.type === 'COMPANY'}
+                onChange={formik.handleChange}
+                className="accent-accent"
+              />
+              <div>
+                <span className="text-sm font-medium text-text">Company</span>
+                <p className="text-xs text-text-light">Hire candidates</p>
+              </div>
+            </label>
+          </div>
+          {formik.values.type === 'COMPANY' && (
+            <p className="text-xs text-amber-600 bg-amber-50 p-2 rounded-md ml-1">
+              Company accounts require purchasing a subscription to access hiring services.
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 text-sm font-semibold text-white bg-accent border-none rounded-lg cursor-pointer transition-all duration-200 mt-1 hover:bg-accent-hover hover:-translate-y-0.5 active:translate-y-0"
+          disabled={formik.isSubmitting}
+          className="w-full py-2 text-sm font-semibold text-white bg-accent border-none rounded-lg cursor-pointer transition-all duration-200 mt-1 hover:bg-accent-hover hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Sign Up
+          {formik.isSubmitting ? 'Signing Up...' : 'Sign Up'}
         </button>
 
         {/* Divider */}
