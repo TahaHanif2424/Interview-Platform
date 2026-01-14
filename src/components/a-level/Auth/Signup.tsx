@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSignupForm } from './useAuth';
+import { Button, Input } from '../../c-level';
 
 interface SignupProps {
   onSwitchToLogin: () => void;
@@ -9,6 +10,77 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const formik = useSignupForm();
 
+  const UserIcon = (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="w-4 h-4"
+    >
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+
+  const EmailIcon = (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="w-4 h-4"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  );
+
+  const LockIcon = (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="w-4 h-4"
+    >
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+
+  const PasswordToggle = (
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="bg-transparent border-none cursor-pointer p-0.5 flex items-center justify-center"
+    >
+      {showPassword ? (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-4 h-4 text-text-light"
+        >
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-4 h-4 text-text-light"
+        >
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+          <line x1="1" y1="1" x2="23" y2="23" />
+        </svg>
+      )}
+    </button>
+  );
+
   return (
     <>
       <h1 className="text-2xl font-bold text-text mb-5 tracking-tight">
@@ -17,132 +89,44 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
 
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
         {/* Name Field */}
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-secondary ml-1">
-            Name
-          </label>
-          <div className="relative flex items-center">
-            <svg
-              className="absolute left-3 w-4 h-4 text-text-light pointer-events-none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="w-full py-2 pl-9 pr-3 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
-            />
-          </div>
-          {formik.touched.name && formik.errors.name && (
-            <span className="text-xs text-red-500 ml-1">
-              {formik.errors.name}
-            </span>
-          )}
-        </div>
+        <Input
+          type="text"
+          name="name"
+          label="Name"
+          placeholder="Enter your name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          leftIcon={UserIcon}
+          error={formik.touched.name ? formik.errors.name : undefined}
+        />
 
         {/* Email Field */}
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-secondary ml-1">
-            Email
-          </label>
-          <div className="relative flex items-center">
-            <svg
-              className="absolute left-3 w-4 h-4 text-text-light pointer-events-none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-            <input
-              type="email"
-              name="email"
-              placeholder="email@gmail.com"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="w-full py-2 pl-9 pr-3 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
-            />
-          </div>
-          {formik.touched.email && formik.errors.email && (
-            <span className="text-xs text-red-500 ml-1">
-              {formik.errors.email}
-            </span>
-          )}
-        </div>
+        <Input
+          type="email"
+          name="email"
+          label="Email"
+          placeholder="email@gmail.com"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          leftIcon={EmailIcon}
+          error={formik.touched.email ? formik.errors.email : undefined}
+        />
 
         {/* Password Field */}
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-secondary ml-1">
-            Password
-          </label>
-          <div className="relative flex items-center">
-            <svg
-              className="absolute left-3 w-4 h-4 text-text-light pointer-events-none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              placeholder="Enter your password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="w-full py-2 pl-9 pr-10 text-sm border border-border rounded-lg outline-none transition-all duration-200 bg-white text-text placeholder:text-text-light focus:border-accent focus:shadow-[0_0_0_2px_rgba(16,185,129,0.1)]"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-2.5 bg-transparent border-none cursor-pointer p-0.5 flex items-center justify-center"
-            >
-              {showPassword ? (
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="w-4 h-4 text-text-light"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              ) : (
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="w-4 h-4 text-text-light"
-                >
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-              )}
-            </button>
-          </div>
-          {formik.touched.password && formik.errors.password && (
-            <span className="text-xs text-red-500 ml-1">
-              {formik.errors.password}
-            </span>
-          )}
-        </div>
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          label="Password"
+          placeholder="Enter your password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          leftIcon={LockIcon}
+          rightElement={PasswordToggle}
+          error={formik.touched.password ? formik.errors.password : undefined}
+        />
 
         {/* Account Type Field */}
         <div className="flex flex-col gap-2">
@@ -202,13 +186,14 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
         </div>
 
         {/* Submit Button */}
-        <button
+        <Button
           type="submit"
+          fullWidth
           disabled={formik.isSubmitting}
-          className="w-full py-2 text-sm font-semibold text-white bg-accent border-none rounded-lg cursor-pointer transition-all duration-200 mt-1 hover:bg-accent-hover hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-1"
         >
           {formik.isSubmitting ? 'Signing Up...' : 'Sign Up'}
-        </button>
+        </Button>
 
         {/* Divider */}
         <div className="flex items-center gap-3 my-1">
@@ -275,13 +260,9 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
         {/* Toggle to Login */}
         <p className="text-center text-xs text-text-muted mt-1">
           Already have an account?{' '}
-          <button
-            type="button"
-            onClick={onSwitchToLogin}
-            className="bg-transparent border-none text-accent font-semibold cursor-pointer text-xs underline"
-          >
+          <Button type="button" variant="link" onClick={onSwitchToLogin}>
             Login
-          </button>
+          </Button>
         </p>
       </form>
     </>
