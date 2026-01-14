@@ -1,19 +1,19 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import PrivateRoutes from "./PrivateRoutes";
-import PublicRoutes from "./PublicRoutes";
-import AuthPage from "../pages/AuthPage";
-import Dashboard from "../pages/Dashboard";
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import PrivateRoutes from './PrivateRoutes';
+import PublicRoutes from './PublicRoutes';
+import AuthPage from '../pages/AuthPage';
+import Dashboard from '../pages/Dashboard';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Navigate to="/auth" replace />,
   },
   {
     element: <PublicRoutes />,
     children: [
       {
-        path: "/auth",
+        path: '/auth',
         element: <AuthPage />,
       },
     ],
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoutes />,
     children: [
       {
-        path: "/dashboard",
+        path: '/dashboard',
         element: <Dashboard />,
       },
     ],

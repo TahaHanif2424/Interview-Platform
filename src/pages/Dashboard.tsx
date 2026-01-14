@@ -1,7 +1,7 @@
 const Dashboard = () => {
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/auth";
+    localStorage.removeItem('token');
+    window.location.href = '/auth';
   };
 
   return (
