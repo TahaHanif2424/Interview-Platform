@@ -33,12 +33,12 @@ export const useLoginForm = () => {
     validationSchema: loginSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        // TODO: Replace with actual API call
+        // TODO: Replace with actual API 
         console.log('Login values:', values);
         localStorage.setItem('token', 'dummy-token');
         navigate('/dashboard');
       } catch (error) {
-        setErrors({ email: 'Invalid email or password' });
+        setErrors({ email: 'Invalid email or password. The error is '+ error });
       } finally {
         setSubmitting(false);
       }
