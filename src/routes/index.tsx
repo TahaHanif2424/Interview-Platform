@@ -3,27 +3,33 @@ import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 import AuthPage from '../pages/AuthPage';
 import Dashboard from '../pages/Dashboard';
+import { RootLayout } from '../components/c-level';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Navigate to="/auth" replace />,
-  },
-  {
-    element: <PublicRoutes />,
+    element: <RootLayout />,
     children: [
       {
-        path: '/auth',
-        element: <AuthPage />,
+        path: '/',
+        element: <Navigate to="/auth" replace />,
       },
-    ],
-  },
-  {
-    element: <PrivateRoutes />,
-    children: [
       {
-        path: '/dashboard',
-        element: <Dashboard />,
+        element: <PublicRoutes />,
+        children: [
+          {
+            path: '/auth',
+            element: <AuthPage />,
+          },
+        ],
+      },
+      {
+        element: <PrivateRoutes />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

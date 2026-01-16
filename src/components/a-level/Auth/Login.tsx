@@ -24,7 +24,6 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Replace with actual API call
-    console.log('Login', { email, password });
     localStorage.setItem('token', 'dummy-token');
     navigate('/dashboard');
   };
