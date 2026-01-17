@@ -24,7 +24,7 @@ export const signup = async ({ email, password, name, type }: Signup) => {
     .upsert({ id: userId, email, name, type });
 
   if (profileError) throw profileError;
-
+  console.log(signUpData);
   return signUpData;
 };
 
@@ -35,5 +35,8 @@ export const login = async ({ email, password }: Login) => {
     password,
   });
   if (error) throw error;
+  if(!data.session){
+    throw new Error('Login failed: No active session found.');
+  }
   return data;
 };

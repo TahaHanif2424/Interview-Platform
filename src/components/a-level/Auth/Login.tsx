@@ -10,23 +10,16 @@ import {
   FacebookIcon,
   AppleIcon,
 } from '../../c-level';
+import { useLoginForm } from './useAuth';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
-  const navigate = useNavigate();
+  
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Replace with actual API call
-    localStorage.setItem('token', 'dummy-token');
-    navigate('/dashboard');
-  };
+  const formik = useLoginForm();
 
   return (
     <>
@@ -34,14 +27,14 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
         Welcome Back!!
       </h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3.5">
         {/* Email Field */}
         <Input
           type="email"
           label="Email"
           placeholder="email@gmail.com"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          value={formik.values.email}
+          onChange={formik.handleChange}
           leftIcon={<EmailIcon />}
         />
 
@@ -50,8 +43,8 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
           type={showPassword ? 'text' : 'password'}
           label="Password"
           placeholder="Enter your password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={formik.values.password}
+          onChange={formik.handleChange}
           leftIcon={<LockIcon />}
           rightElement={
             <PasswordToggle
