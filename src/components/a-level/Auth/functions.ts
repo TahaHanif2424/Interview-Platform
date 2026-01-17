@@ -18,7 +18,7 @@ export const signup = async ({ email, password, name, type }: Signup) => {
   }
 
   // 2) store extra fields in your table (recommended: "profiles")
-  
+
   const { error: profileError } = await supabase
     .from('users')
     .upsert({ id: userId, email, name, type });

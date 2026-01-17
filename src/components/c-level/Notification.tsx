@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, useState, useCallback, type JSX } from 'react';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
@@ -10,7 +10,10 @@ export interface NotificationProps {
   onClose: (id: string) => void;
 }
 
-const typeStyles: Record<NotificationType, { bg: string; border: string; icon: string }> = {
+const typeStyles: Record<
+  NotificationType,
+  { bg: string; border: string; icon: string }
+> = {
   success: {
     bg: 'bg-accent/10',
     border: 'border-accent',
@@ -35,17 +38,42 @@ const typeStyles: Record<NotificationType, { bg: string; border: string; icon: s
 
 const icons: Record<NotificationType, JSX.Element> = {
   success: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 13l4 4L19 7"
+      />
     </svg>
   ),
   error: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M6 18L18 6M6 6l12 12"
+      />
     </svg>
   ),
   warning: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -55,7 +83,12 @@ const icons: Record<NotificationType, JSX.Element> = {
     </svg>
   ),
   info: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -78,13 +111,13 @@ export const Notification = ({
 
   const styles = typeStyles[type];
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsLeaving(true);
     setTimeout(() => {
       onClose(id);
     }, 300);
-  };
-  
+  }, [id, onClose]);
+
   useEffect(() => {
     const showTimer = setTimeout(() => setIsVisible(true), 10);
 
@@ -96,9 +129,7 @@ export const Notification = ({
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
     };
-  }, [duration]);
-
-  
+  }, [duration, handleClose]);
 
   return (
     <div
@@ -119,8 +150,18 @@ export const Notification = ({
         className="flex-shrink-0 p-1 rounded-md text-text-muted hover:text-text hover:bg-black/5 transition-colors duration-200"
         aria-label="Close notification"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>

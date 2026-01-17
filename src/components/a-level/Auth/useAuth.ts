@@ -1,8 +1,7 @@
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { signupSchema, loginSchema } from './validationSchemas';
 import type { Signup, Login } from './types';
-import { signup } from './functions.ts';
+import { signup, login } from './functions.ts';
 import { useNotification } from '../../c-level';
 
 export const useSignupForm = () => {
@@ -27,7 +26,8 @@ export const useSignupForm = () => {
           );
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Signup failed';
+        const message =
+          error instanceof Error ? error.message : 'Signup failed';
         setErrors({ email: message });
         showNotification(message, 'error');
       } finally {
@@ -40,7 +40,7 @@ export const useSignupForm = () => {
 };
 
 export const useLoginForm = () => {
-  const navigate = useNavigate();
+  const { showNotification } = useNotification();
 
   const formik = useFormik<Login>({
     initialValues: {
@@ -50,11 +50,11 @@ export const useLoginForm = () => {
     validationSchema: loginSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        // TODO: Replace with actual API 
-        localStorage.setItem('token', 'dummy-token');
-        navigate('/dashboard');
+        await login(values);
       } catch (error) {
-        setErrors({ email: 'Invalid email or password. The error is '+ error });
+        const message = error instanceof Error ? error.message : 'Login failed';
+        setErrors({ email: message });
+        showNotification(message, 'error');
       } finally {
         setSubmitting(false);
       }

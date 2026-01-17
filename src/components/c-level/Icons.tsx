@@ -90,7 +90,9 @@ export const GoogleIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
   </svg>
 );
 
-export const FacebookIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+export const FacebookIcon: React.FC<IconProps> = ({
+  className = 'w-6 h-6',
+}) => (
   <svg viewBox="0 0 24 24" className={className}>
     <circle cx="12" cy="12" r="10" fill="#374151" />
     <path

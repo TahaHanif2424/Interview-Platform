@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
 
 const PrivateRoutes = () => {
-  const isAuthenticated = Boolean(localStorage.getItem('token'));
+  const { isAuthenticated } = useAuthStore();
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/auth" replace />;
 };
