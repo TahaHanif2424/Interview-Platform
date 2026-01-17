@@ -35,7 +35,7 @@ export const login = async ({ email, password }: Login) => {
     password,
   });
   if (error) throw error;
-  if(!data.session){
+  if (!data.session) {
     throw new Error('Login failed: No active session found.');
   }
   return data;

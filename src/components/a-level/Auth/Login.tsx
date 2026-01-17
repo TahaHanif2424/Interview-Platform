@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Input,
@@ -11,14 +10,15 @@ import {
   AppleIcon,
 } from '../../c-level';
 import { useLoginForm } from './useAuth';
+import { useAuthStore } from '../../../store/authStore';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
-  
   const [showPassword, setShowPassword] = useState(false);
+  const authdata=useAuthStore();
   const formik = useLoginForm();
 
   return (
@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
           type="email"
           label="Email"
           placeholder="email@gmail.com"
-          value={formik.values.email}
+          value={authdata.user?.email || formik.values.email}
           onChange={formik.handleChange}
           leftIcon={<EmailIcon />}
         />
