@@ -1,6 +1,6 @@
 import { supabase } from '../../../supabase-config';
 import type { Signup, Login } from './types';
-
+import api from '../../../utils/api';
 // SIGNUP
 export const signup = async ({ email, password, name, type }: Signup) => {
   // 1) create auth user
@@ -25,6 +25,11 @@ export const signup = async ({ email, password, name, type }: Signup) => {
 
   if (profileError) throw profileError;
   console.log(signUpData);
+  const localdata=await api.post('/users',{userId,email,name,type});
+  if(localdata.data.error){
+    throw new Error(localdata.data.error);
+  }
+  console.log("local data created"+localdata.data);
   return signUpData;
 };
 
@@ -39,4 +44,10 @@ export const login = async ({ email, password }: Login) => {
     throw new Error('Login failed: No active session found.');
   }
   return data;
+};
+
+// LOGOUT
+export const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
 };

@@ -31,6 +31,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
         {/* Email Field */}
         <Input
           type="email"
+          name="email"
           label="Email"
           placeholder="email@gmail.com"
           value={authdata.user?.email || formik.values.email}
@@ -41,6 +42,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
         {/* Password Field */}
         <Input
           type={showPassword ? 'text' : 'password'}
+          name="password"
           label="Password"
           placeholder="Enter your password"
           value={formik.values.password}

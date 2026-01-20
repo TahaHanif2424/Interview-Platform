@@ -1,7 +1,13 @@
+import { logout } from '../components/a-level/Auth/functions';
+
 const Dashboard = () => {
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/auth';
+  const handleLogout = async () => {
+    try {
+      await logout();
+      window.location.href = '/auth';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
