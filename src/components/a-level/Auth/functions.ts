@@ -25,11 +25,11 @@ export const signup = async ({ email, password, name, type }: Signup) => {
 
   if (profileError) throw profileError;
   console.log(signUpData);
-  const localdata=await api.post('/users',{userId,email,name,type});
-  if(localdata.data.error){
+  const localdata = await api.post('/users', { userId, email, name, type });
+  if (localdata.data.error) {
     throw new Error(localdata.data.error);
   }
-  console.log("local data created"+localdata.data);
+  console.log('local data created' + localdata.data);
   return signUpData;
 };
 

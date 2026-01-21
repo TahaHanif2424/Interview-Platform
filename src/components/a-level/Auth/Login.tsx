@@ -18,7 +18,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const authdata=useAuthStore();
+  const authdata = useAuthStore();
   const formik = useLoginForm();
 
   return (
