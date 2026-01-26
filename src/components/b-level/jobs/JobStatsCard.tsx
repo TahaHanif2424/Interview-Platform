@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../c-level';
+import { Card } from '../../c-level';
 
 interface JobStatsCardProps {
   title: string;

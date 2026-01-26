@@ -10,8 +10,8 @@ export { default as CalendarGrid } from './CalendarGrid';
 export { default as InterviewListItem } from './InterviewListItem';
 
 // Jobs Components
-export { JobCard } from './JobCard';
-export { JobStatsCard } from './JobStatsCard';
+export { JobCard } from './jobs/JobCard';
+export { JobStatsCard } from './jobs/JobStatsCard';
 
 // Modals
 export { ScheduleInterviewModal, DayInterviewsModal, AddJobModal, JobDetailsModal } from './modals';

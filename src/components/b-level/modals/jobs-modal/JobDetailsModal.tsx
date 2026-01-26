@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Button, Badge } from '../../c-level';
-import type { Job } from '../../a-level/Jobs/types';
+import { Modal, Button, Badge } from '../../../c-level';
+import type { Job } from '../../../a-level/Jobs/types';
 
 interface JobDetailsModalProps {
   isOpen: boolean;

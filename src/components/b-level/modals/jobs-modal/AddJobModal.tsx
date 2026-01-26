@@ -1,8 +1,7 @@
 import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Modal, Input, Button } from '../../c-level';
-import type { JobFormData } from '../../a-level/Jobs/types';
+import { Modal, Input, Button } from '../../../c-level';
+import type { JobFormData } from '../../../a-level/Jobs/types';
+import { useAddJobs } from './use-add-jobs';
 
 interface AddJobModalProps {
   isOpen: boolean;
@@ -10,51 +9,12 @@ interface AddJobModalProps {
   onSubmit: (data: JobFormData) => void;
 }
 
-const validationSchema = Yup.object({
-  title: Yup.string()
-    .required('Job title is required')
-    .min(3, 'Title must be at least 3 characters'),
-  description: Yup.string()
-    .required('Description is required')
-    .min(20, 'Description must be at least 20 characters'),
-  requirements: Yup.string()
-    .required('Requirements are required')
-    .min(10, 'Requirements must be at least 10 characters'),
-  location: Yup.string().required('Location is required'),
-  specification: Yup.string()
-    .required('Specification is required')
-    .min(10, 'Specification must be at least 10 characters'),
-  department: Yup.string().required('Department is required'),
-  type: Yup.string()
-    .oneOf(['full-time', 'part-time', 'contract', 'remote'])
-    .required('Job type is required'),
-  salary: Yup.string(),
-});
-
-const initialValues: JobFormData = {
-  title: '',
-  description: '',
-  requirements: '',
-  location: '',
-  specification: '',
-  department: '',
-  type: 'full-time',
-  salary: '',
-};
-
 export const AddJobModal: React.FC<AddJobModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
 }) => {
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      onSubmit(values);
-      resetForm();
-    },
-  });
+
+  const { formik } = useAddJobs();
 
   const handleClose = () => {
     formik.resetForm();
@@ -109,8 +69,7 @@ export const AddJobModal: React.FC<AddJobModalProps> = ({
             >
               <option value="full-time">Full Time</option>
               <option value="part-time">Part Time</option>
-              <option value="contract">Contract</option>
-              <option value="remote">Remote</option>
+              <option value="intern">Intern</option>
             </select>
             {formik.touched.type && formik.errors.type && (
               <span className="text-xs text-red-500">{formik.errors.type}</span>

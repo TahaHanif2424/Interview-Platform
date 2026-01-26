@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Badge } from '../c-level';
-import type { Job } from '../a-level/Jobs/types';
+import { Card, Badge } from '../../c-level';
+import type { Job } from '../../a-level/Jobs/types';
 
 interface JobCardProps {
   job: Job;
