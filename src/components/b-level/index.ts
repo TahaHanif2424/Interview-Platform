@@ -9,5 +9,9 @@ export { default as CalendarHeader } from './CalendarHeader';
 export { default as CalendarGrid } from './CalendarGrid';
 export { default as InterviewListItem } from './InterviewListItem';
 
+// Jobs Components
+export { JobCard } from './JobCard';
+export { JobStatsCard } from './JobStatsCard';
+
 // Modals
-export { ScheduleInterviewModal, DayInterviewsModal } from './modals';
+export { ScheduleInterviewModal, DayInterviewsModal, AddJobModal, JobDetailsModal } from './modals';

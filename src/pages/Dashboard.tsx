@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Sidebar } from '../components/a-level/Sidebar';
 import { InterviewScheduling } from '../components/a-level/InterviewScheduling';
+import { Jobs } from '../components/a-level/Jobs';
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -53,12 +54,7 @@ const Dashboard = () => {
           />
         );
       case 'jobs':
-        return (
-          <PagePlaceholder
-            title="Jobs"
-            description="Manage job postings and positions."
-          />
-        );
+        return <Jobs />;
       case 'reports':
         return (
           <PagePlaceholder
