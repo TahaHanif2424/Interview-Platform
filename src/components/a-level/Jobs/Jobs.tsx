@@ -32,9 +32,9 @@ export const Jobs: React.FC = () => {
           <h1 className="text-2xl font-bold text-text">Jobs</h1>
           <p className="text-text-muted">Manage job postings and positions</p>
         </div>
-        <Button onClick={openAddModal}>
+        <Button onClick={openAddModal} className="px-6 py-2.5">
           <svg
-            className="w-4 h-4 mr-2"
+            className="w-4 h-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

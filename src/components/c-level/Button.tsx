@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'text-sm font-semibold border-none rounded-lg cursor-pointer transition-all duration-200';
+    'inline-flex items-center justify-center gap-2 text-sm font-semibold border-none rounded-lg cursor-pointer transition-all duration-200';
 
   const variantStyles = {
     primary:

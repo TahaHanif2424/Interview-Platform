@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Input, Button } from '../../../c-level';
+import { Modal, Input, Button, Select } from '../../../c-level';
 import type { JobFormData } from '../../../a-level/Jobs/types';
 import { useAddJobs } from './use-add-jobs';
 
@@ -58,23 +58,19 @@ export const AddJobModal: React.FC<AddJobModalProps> = ({
             onBlur={formik.handleBlur}
             error={formik.touched.location ? formik.errors.location : undefined}
           />
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-text">Job Type</label>
-            <select
-              name="type"
-              value={formik.values.type}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent bg-white text-text"
-            >
-              <option value="full-time">Full Time</option>
-              <option value="part-time">Part Time</option>
-              <option value="intern">Intern</option>
-            </select>
-            {formik.touched.type && formik.errors.type && (
-              <span className="text-xs text-red-500">{formik.errors.type}</span>
-            )}
-          </div>
+          <Select
+            label="Job Type"
+            name="type"
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.type ? formik.errors.type : undefined}
+            options={[
+              { value: 'full-time', label: 'Full Time' },
+              { value: 'part-time', label: 'Part Time' },
+              { value: 'intern', label: 'Intern' },
+            ]}
+          />
         </div>
 
         <Input
