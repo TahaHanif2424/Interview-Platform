@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addJobs } from "./functions";
+import { useAuthStore } from "../../../../store/authStore";
 export const useAddJobs = () => {
 
+    const user=useAuthStore();
+    const userId=user.user?.id || '';
     const validationSchema = Yup.object({
       title: Yup.string()
         .required('Job title is required')
@@ -35,6 +38,7 @@ export const useAddJobs = () => {
             type: 'full-time',
             salary: '',
             status: 'open',
+            userId: userId
         },
         validationSchema,
         onSubmit: async (values) => {
